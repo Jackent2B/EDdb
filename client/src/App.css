@@ -2,7 +2,20 @@
   box-sizing: border-box;
 }
 
+a{
+  color: inherit;
+}
+
 body{
   margin: 0;
   padding: 0;
+}
+
+#header-navbar-brand{
+  font-size: 2rem;
+}
+
+.header-nav-link{
+  font-size: 1.1rem;
+  padding-right: 20px!important;
 }

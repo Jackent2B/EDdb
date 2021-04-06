@@ -1,15 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Main from './components/MainComponent';
-import {BrowserRouter as Router} from 'react-router-dom';
+import Main from './components/Main';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Main />
-      </div>
-    </Router>
+    <Main />
   );
 }
 
