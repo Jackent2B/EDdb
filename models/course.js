@@ -14,48 +14,48 @@ const courseSchema = new mongoose.Schema({
   },
   // course duration range
   zero_to_5: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   five_to_10: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   ten_to_15: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   fifteen_to_20: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   twenty_to_40: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   greater_than_40: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   //price range
   zero_to_500: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   fivehundred_to_1000: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   thousand_to_2000: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   twothousand_to_5000: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   greater_than_5000: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   ratings: {
@@ -66,23 +66,23 @@ const courseSchema = new mongoose.Schema({
   },
   // No. of assignments range
   zero_to_10: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   ten_to_25: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   twentyfive_to_50: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   fifty_to_100: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
   greater_than_100: {
-    type: Boolean,
+    type: Number,
     default: 0,
   },
 });
