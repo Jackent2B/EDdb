@@ -1,19 +1,44 @@
-import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Container,
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText
+} from 'reactstrap';
+
 
 function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
-    <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
+    <Navbar collapseOnSelect expand="md" className="navbar navbar-dark bg-dark">
       <Container>
-        <Navbar.Brand href="#home" id="header-navbar-brand"> ECDB </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ml-auto">
-            <Nav.Link href="#home" className="header-nav-link">Home</Nav.Link>
-            <Nav.Link href="#services" className="header-nav-link">Services</Nav.Link>
-            <Nav.Link href="#contact" className="header-nav-link">Contact us</Nav.Link>
-            </Nav>
-        </Navbar.Collapse>
+      <NavbarBrand href="/"> ECDB </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink href="#aboutus">About Us</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#services">Services</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#contactus">Contact us</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
       </Container>
     </Navbar>
   );
