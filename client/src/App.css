@@ -11,11 +11,29 @@ body{
   padding: 0;
 }
 
-#header-navbar-brand{
-  font-size: 2rem;
+.main-jumbo{
+  background-color: rgb(44, 40, 40);
+  border-radius: 0!important;
+  width: 100vw;
+  height: 70vh;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.header-nav-link{
-  font-size: 1.1rem;
-  padding-right: 20px!important;
+.header-nav{
+  background-color: rgb(44,40,40)!important;
+  padding-top: 20px!important;
+  font-size: 20px;
+}
+
+.header-navbrand{
+  font-size: 25px;
+}
+
+.header-navlink{
+  padding-right: 25px!important;
+}
+
+.main-container{
+  margin-top: 60px!important;
 }

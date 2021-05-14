@@ -22,20 +22,20 @@ function Header() {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Navbar collapseOnSelect expand="md" className="navbar navbar-dark bg-dark">
+    <Navbar collapseOnSelect expand="md" className="navbar navbar-dark bg-dark header-nav" fixed>
       <Container>
-      <NavbarBrand href="/"> ECDB </NavbarBrand>
+      <NavbarBrand href="/" className="header-navbrand"> ECDB </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="#aboutus">About Us</NavLink>
+              <NavLink href="#aboutus" className="header-navlink">About Us</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#services">Services</NavLink>
+              <NavLink href="#services" className="header-navlink">Services</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#contactus">Contact us</NavLink>
+              <NavLink href="#contactus" className="header-navlink">Contact us</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
