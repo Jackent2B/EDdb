@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Container,
   Collapse,
@@ -12,9 +12,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
+  NavbarText,
 } from 'reactstrap';
-
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +26,7 @@ function Header() {
       <NavbarBrand href="/" className="header-navbrand"> ECDB </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
+          <Nav className='ml-auto' navbar>
             <NavItem>
               <NavLink href="#aboutus" className="header-navlink">About Us</NavLink>
             </NavItem>

@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth');
+const courseRouter = require('./routes/courseContent');
 const { mongoURL } = require('./config/keys');
 const PORT = process.env.PORT || 3000;
 const dotenv = require('dotenv');
@@ -17,6 +18,7 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/auth', authRouter);
+app.use('/course', courseRouter);
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public/index.html'), function (err) {
