@@ -14,10 +14,11 @@ function RecommendForm() {
   const [duration, setDuration] = useState(NaN);
   const [cost, setCost] = useState(NaN);
   const [assessments, setAssessments] = useState(NaN);
+  const [rating, setRating] = useState(NaN);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(domain, duration, cost, assessments);
+    console.log(domain, duration, cost, assessments,rating);
     //api call, get results here
   };
 
@@ -45,33 +46,54 @@ function RecommendForm() {
           <FormGroup>
             <Label for='duration'>Duration (in hours)</Label>
             <Input
-              type='number'
+              type='select'
               id='duration'
               name='duration'
+              defaultValue='0-5'
               onChange={(e) => setDuration(e.target.value)}
-            />
+            >
+              <option>0-5</option>
+              <option>5-10</option>
+              <option>10-15</option>
+              <option>15-20</option>
+              <option>20-40</option>
+              <option>Greater than 40</option>
+            </Input>
           </FormGroup>
           <FormGroup>
             <Label for='cost'>Cost (in Rupees)</Label>
             <Input
-              type='number'
+              type='select'
               name='cost'
               id='cost'
+              default= '0-500'
               onChange={(e) => setCost(e.target.value)}
-            />
+            >
+              <option>0-500</option>
+              <option>500-1000</option>
+              <option>1000-2000</option>
+              <option>2000-5000</option>
+              <option>Greater than 5000</option>
+            </Input>
           </FormGroup>
           <FormGroup>
             <Label for='assessments'>Number of Assessments</Label>
             <Input
-              type='number'
+              type='select'
               name='assessments'
               id='assessments'
+              default='0-10'
               onChange={(e) => setAssessments(e.target.value)}
-            />
+            >
+              <option>0-10</option>
+              <option>10-25</option>
+              <option>25-50</option>
+              <option>50-100</option>
+              <option>Greater than 100</option>
+            </Input>
           </FormGroup>
           <FormText color='muted'>
-            This is some placeholder block-level help text for the above input.
-            It's a bit lighter and easily wraps to a new line.
+            Based on user reviews and matching requirements, top courses will be recommended.
           </FormText>
           <br />
           <Button>Submit</Button>
