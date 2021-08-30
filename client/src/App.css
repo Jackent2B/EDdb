@@ -9,6 +9,7 @@ a {
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .main-jumbo {
@@ -42,10 +43,11 @@ body {
   width: 100vw;
   font-size: 20px;
   padding: 5px;
+  margin-top: 25px;
   background-color: #dbdbdb;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
   left: 0;
+  bottom: 0;
 }
 
 .footer-row{

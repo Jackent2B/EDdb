@@ -9,6 +9,7 @@ import Header from './Header';
 import Footer from './Footer';
 import RecommendForm from './RecommendForm';
 import Home from './Home';
+import ShareReviewForm from './ShareReviewForm';
 
 function Main() {
   return (
@@ -17,6 +18,7 @@ function Main() {
       <Switch>
         <Route exact path='/home' component={Home} />
         <Route exact path='/recommendation' component={RecommendForm} />
+        <Route exact path='/share-review' component={ShareReviewForm} />
         <Redirect to='/home' />
       </Switch>
       <Footer />

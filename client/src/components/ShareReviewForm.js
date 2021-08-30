@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import ReactStars from "react-rating-stars-component";
 import {
   Container,
   Button,
@@ -7,33 +8,34 @@ import {
   Label,
   Input,
   FormText,
-} from 'reactstrap';
+} from "reactstrap";
 
-function RecommendForm() {
-  const [domain, setDomain] = useState('Data Structures and Algorithms');
+function ShareReviewForm() {
+  const [domain, setDomain] = useState("Data Structures and Algorithms");
   const [duration, setDuration] = useState(NaN);
   const [cost, setCost] = useState(NaN);
   const [assessments, setAssessments] = useState(NaN);
+  const [rating, setRating] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(domain, duration, cost, assessments);
+    console.log(domain, duration, cost, assessments, rating);
     //api call, get results here
   };
 
   return (
     <div>
       <Container>
-        {' '}
+        {" "}
         <br />
         <Form onSubmit={(e) => handleSubmit(e)}>
           <FormGroup>
-            <Label for='domain'>Domain</Label>
+            <Label for="domain">Domain</Label>
             <Input
-              type='select'
-              name='domain'
-              id='domain'
-              defaultValue='Data Structures and Algorithms'
+              type="select"
+              name="domain"
+              id="domain"
+              defaultValue="Data Structures and Algorithms"
               onChange={(e) => setDomain(e.target.value)}
             >
               <option>Data Structures and Algorithms</option>
@@ -43,12 +45,12 @@ function RecommendForm() {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for='duration'>Duration (in hours)</Label>
+            <Label for="duration">Duration (in hours)</Label>
             <Input
-              type='select'
-              id='duration'
-              name='duration'
-              defaultValue='0-5'
+              type="select"
+              id="duration"
+              name="duration"
+              defaultValue="0-5"
               onChange={(e) => setDuration(e.target.value)}
             >
               <option>0-5</option>
@@ -60,12 +62,12 @@ function RecommendForm() {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for='cost'>Cost (in Rupees)</Label>
+            <Label for="cost">Cost (in Rupees)</Label>
             <Input
-              type='select'
-              name='cost'
-              id='cost'
-              default= '0-500'
+              type="select"
+              name="cost"
+              id="cost"
+              default="0-500"
               onChange={(e) => setCost(e.target.value)}
             >
               <option>0-500</option>
@@ -76,12 +78,12 @@ function RecommendForm() {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for='assessments'>Number of Assessments</Label>
+            <Label for="assessments">Number of Assessments</Label>
             <Input
-              type='select'
-              name='assessments'
-              id='assessments'
-              default='0-10'
+              type="select"
+              name="assessments"
+              id="assessments"
+              default="0-10"
               onChange={(e) => setAssessments(e.target.value)}
             >
               <option>0-10</option>
@@ -91,9 +93,17 @@ function RecommendForm() {
               <option>Greater than 100</option>
             </Input>
           </FormGroup>
-          <FormText color='muted'>
-            Based on user reviews and matching requirements, top courses will be recommended.
-          </FormText>
+          <FormGroup>
+            <Label for="rating">Rating</Label>
+            <ReactStars
+              id="rating"
+              count={10}
+              value={rating}
+              onChange={(newRating) => setRating(newRating)}
+              size={24}
+              activeColor="#ffd700"
+            />
+          </FormGroup>
           <br />
           <Button>Submit</Button>
         </Form>
@@ -102,4 +112,4 @@ function RecommendForm() {
   );
 }
 
-export default RecommendForm;
+export default ShareReviewForm;
