@@ -36,18 +36,18 @@ function Header() {
         <Collapse isOpen={isOpen} navbar>
           <Nav className='ml-auto' navbar>
             <NavItem>
-              <NavLink href='#aboutus' className='header-navlink'>
-                About Us
+              <NavLink href='/login' className='header-navlink'>
+                Login
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='#services' className='header-navlink'>
+              <NavLink href='/home#services' className='header-navlink'>
                 Services
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='#contactus' className='header-navlink'>
-                Contact us
+              <NavLink href='/signup' className='header-navlink'>
+                Sign up
               </NavLink>
             </NavItem>
           </Nav>
