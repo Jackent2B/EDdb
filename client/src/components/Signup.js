@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Container,
   Button,
@@ -10,23 +11,46 @@ import {
 } from "reactstrap";
 
 function Signup() {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password, username);
+    fetch("http://localhost:3000/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((result) => {
+          console.log(result);
+          history.push("/login");
+        });
+        return;
+      }
+      res.json().then((error) => setError(error));
+    },
+    (error) => setError(error)
+    );
   };
   return (
     <Container className="mt-5">
+      {error ? (
+        <div className="alert alert-warning" role="alert">
+          {" "}
+          {error.message}{" "}
+        </div>
+      ) : null}
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label> Username </Label>
+          <Label> Name </Label>
           <Input
             type="text"
-            value={username}
+            value={name}
             placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </FormGroup>

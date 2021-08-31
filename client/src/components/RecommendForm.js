@@ -11,9 +11,9 @@ import {
 
 function RecommendForm() {
   const [domain, setDomain] = useState('Data Structures and Algorithms');
-  const [duration, setDuration] = useState(NaN);
-  const [cost, setCost] = useState(NaN);
-  const [assessments, setAssessments] = useState(NaN);
+  const [duration, setDuration] = useState("None");
+  const [cost, setCost] = useState("None");
+  const [assessments, setAssessments] = useState("None");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ function RecommendForm() {
               type='select'
               name='domain'
               id='domain'
-              defaultValue='Data Structures and Algorithms'
+              value={domain}
               onChange={(e) => setDomain(e.target.value)}
             >
               <option>Data Structures and Algorithms</option>
@@ -48,9 +48,10 @@ function RecommendForm() {
               type='select'
               id='duration'
               name='duration'
-              defaultValue='0-5'
+              value={duration}
               onChange={(e) => setDuration(e.target.value)}
             >
+              <option>None</option>
               <option>0-5</option>
               <option>5-10</option>
               <option>10-15</option>
@@ -65,9 +66,10 @@ function RecommendForm() {
               type='select'
               name='cost'
               id='cost'
-              default= '0-500'
+              value={cost}
               onChange={(e) => setCost(e.target.value)}
             >
+              <option>None</option>
               <option>0-500</option>
               <option>500-1000</option>
               <option>1000-2000</option>
@@ -81,9 +83,10 @@ function RecommendForm() {
               type='select'
               name='assessments'
               id='assessments'
-              default='0-10'
+              value={assessments}
               onChange={(e) => setAssessments(e.target.value)}
             >
+              <option>None</option>
               <option>0-10</option>
               <option>10-25</option>
               <option>25-50</option>

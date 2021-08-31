@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
+import { useHistory } from "react-router-dom";
 import {
   Container,
   Button,
@@ -11,16 +12,40 @@ import {
 } from "reactstrap";
 
 function ShareReviewForm() {
+  const history = useHistory();
   const [domain, setDomain] = useState("Data Structures and Algorithms");
-  const [duration, setDuration] = useState(NaN);
-  const [cost, setCost] = useState(NaN);
-  const [assessments, setAssessments] = useState(NaN);
+  const [duration, setDuration] = useState("0-5");
+  const [cost, setCost] = useState("0-500");
+  const [assessments, setAssessments] = useState("0-10");
   const [rating, setRating] = useState(0);
+  const [course, setCourse] = useState("");
+  const [offeredBy, setOfferedBy] = useState("");
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(domain, duration, cost, assessments, rating);
-    //api call, get results here
+    fetch("http://localhost:3000/course", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        domain,
+        duration,
+        cost,
+        assessments,
+        rating,
+        course,
+        offeredBy,
+      })
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((result) => {
+          console.log(result);
+          history.push("/share-review");
+        });
+        return;
+      }
+      res.json().then((error) => setError(error));
+    });
   };
 
   return (
@@ -28,6 +53,7 @@ function ShareReviewForm() {
       <Container>
         {" "}
         <br />
+        {error ? <div className="alert alert-warning" role="alert"> {error.message} </div> : null}
         <Form onSubmit={(e) => handleSubmit(e)}>
           <FormGroup>
             <Label for="domain">Domain</Label>
@@ -35,7 +61,7 @@ function ShareReviewForm() {
               type="select"
               name="domain"
               id="domain"
-              defaultValue="Data Structures and Algorithms"
+              value={domain}
               onChange={(e) => setDomain(e.target.value)}
             >
               <option>Data Structures and Algorithms</option>
@@ -45,12 +71,32 @@ function ShareReviewForm() {
             </Input>
           </FormGroup>
           <FormGroup>
+            <Label for="coursename">Course Name</Label>
+            <Input
+              type="text"
+              name="course"
+              id="coursename"
+              value={course}
+              onChange={(e) => setCourse(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="ofby">Offered By</Label>
+            <Input
+              type="text"
+              name="offeredBy"
+              id="ofby"
+              value={offeredBy}
+              onChange={(e) => setOfferedBy(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup>
             <Label for="duration">Duration (in hours)</Label>
             <Input
               type="select"
               id="duration"
               name="duration"
-              defaultValue="0-5"
+              value={duration}
               onChange={(e) => setDuration(e.target.value)}
             >
               <option>0-5</option>
@@ -67,7 +113,7 @@ function ShareReviewForm() {
               type="select"
               name="cost"
               id="cost"
-              default="0-500"
+              value={cost}
               onChange={(e) => setCost(e.target.value)}
             >
               <option>0-500</option>
@@ -83,7 +129,7 @@ function ShareReviewForm() {
               type="select"
               name="assessments"
               id="assessments"
-              default="0-10"
+              value={assessments}
               onChange={(e) => setAssessments(e.target.value)}
             >
               <option>0-10</option>

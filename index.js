@@ -2,18 +2,26 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require("cors");
 const authRouter = require('./routes/auth');
 const courseRouter = require('./routes/courseContent');
 const { mongoURL } = require('./config/keys');
 const PORT = process.env.PORT || 3000;
 const dotenv = require('dotenv');
 dotenv.config();
+
+var corsOptions = {
+  origin: 'http://localhost:3001',
+  optionsSuccessStatus: 200 
+}
+app.use(cors(corsOptions));
+
 mongoose
   .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('database connected');
   })
-  .catch((err) => clg(err));
+  .catch((err) => console.log(err));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

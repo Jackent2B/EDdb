@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       console.log(err);
       return res.status(401).json({
-        err: 'Something went wrong, Please Log in again',
+        message: 'Something went wrong, Please Log in again',
       });
     } else {
       const { _id } = payload;

@@ -16,14 +16,14 @@ router.post('/signup', (req, res, next) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password)
-    return res.status(422).json({ error: 'Please add all the fields' });
+    return res.status(422).json({ message: 'Please add all the fields' });
 
   User.findOne({ email: email })
     .then((savedUser) => {
       if (savedUser) {
         return res
           .status(422)
-          .json({ error: 'user with the same Id already exists' });
+          .json({ message: 'user with the same Id already exists' });
       } else {
         //encrypting the password to string size 12
         bcrypt.hash(password, 12).then((hashedPassword) => {
@@ -36,14 +36,14 @@ router.post('/signup', (req, res, next) => {
               res.json({ message: 'Successfully signed up' });
             })
             .catch((error) => {
-              res.json({ error: 'Error signing up' });
+              res.status(400).json({ message: 'Error signing up' });
             });
         });
       }
     })
     .catch((err) => {
       console.log(err);
-      // res.json({ error: 'Something went wrong' });
+      res.status(400).json({ message: 'Something went wrong' });
     });
 });
 
@@ -55,7 +55,7 @@ router.post('/signin', (req, res, next) => {
   User.findOne({ email: email.toLowerCase() })
     .then((savedUser) => {
       if (!savedUser) {
-        return res.status(422).json({ error: 'user does not exist' });
+        return res.status(422).json({ message: 'user does not exist' });
       } else {
         bcrypt
           .compare(password, savedUser.password)
@@ -68,7 +68,7 @@ router.post('/signin', (req, res, next) => {
                 token: token,
                 user: { _id, name, email },
               });
-            } else res.json({ message: 'Email or Password is incorrect' });
+            } else res.status(400).json({ message: 'Email or Password is incorrect' });
           })
           .catch((err) => {
             console.log(err);
@@ -76,7 +76,8 @@ router.post('/signin', (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.json({ error: 'Something went wrong' });
+      res.status(400).json({ message: 'Something went wrong' });
     });
 });
+
 module.exports = router;

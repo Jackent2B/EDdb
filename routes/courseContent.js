@@ -1,15 +1,15 @@
 //Code to put data from excel sheet to mongodb automatically
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose');
-const Course = require('../models/course');
-const fetch = require('node-fetch');
+const mongoose = require("mongoose");
+const Course = require("../models/course");
+const fetch = require("node-fetch");
 
-router.get('/add', (req, res, next) => {
+router.get("/add", (req, res, next) => {
   async function getCourseData() {
     const res = await fetch(
-      'https://sheet.best/api/sheets/87dbdd2f-c75a-44cd-974b-1d4aef93ddda'
+      "https://sheet.best/api/sheets/87dbdd2f-c75a-44cd-974b-1d4aef93ddda"
     );
     var data = await res.json();
     console.log(data);
@@ -38,20 +38,82 @@ router.get('/add', (req, res, next) => {
           greater_than_100: data.greater_than_100,
         })
           .then((course) => {
-            res.json({ message: 'Details Submitted Successfully' });
+            res.json({ message: "Details Submitted Successfully" });
           })
           .catch((error) => {
-            res.json({ error: 'Error occurred, Please try again!' });
+            res.json({ error: "Error occurred, Please try again!" });
           });
       })
       .then((course) => {
-        res.json({ message: 'Data submitted to mongodb' });
+        res.json({ message: "Data submitted to mongodb" });
       })
       .catch((error) => {
-        res.json({ error: 'Error occurred, Please try again!' });
+        res.json({ error: "Error occurred, Please try again!" });
       });
   }
   getCourseData();
+});
+
+router.post("/", (req, res, next) => {
+  const { domain, course, offeredBy, duration, cost, assessments, rating } =
+    req.body;
+
+  if (
+    !domain ||
+    !duration ||
+    !cost ||
+    !assessments ||
+    !rating ||
+    !course ||
+    !offeredBy
+  )
+    return res.status(400).json({ message: "Please provide all the fields" });
+
+  const nc = new Course({
+    domain,
+    ratings: rating,
+    course,
+    offered_by: offeredBy,
+  });
+
+  if (duration.startsWith("0")) nc.zero_to_5 = 1;
+  else if (duration.startsWith("5")) nc.five_to_10 = 1;
+  else if (duration.startsWith("10")) nc.ten_to_15 = 1;
+  else if (duration.startsWith("15")) nc.fifteen_to_20 = 1;
+  else if (duration.startsWith("20")) nc.twenty_to_40 = 1;
+  else nc.greater_than_40 = 1;
+
+  if (cost.startsWith("0")) nc.zero_to_500 = 1;
+  else if (cost.startsWith("500")) nc.fivehundred_to_1000 = 1;
+  else if (cost.startsWith("1000")) nc.thousand_to_2000 = 1;
+  else if (cost.startsWith("2000")) nc.twothousand_to_5000 = 1;
+  else nc.greater_than_5000 = 1;
+
+  if (assessments.startsWith("0")) nc.zero_to_10 = 1;
+  else if (assessments.startsWith("10")) nc.ten_to_25 = 1;
+  else if (assessments.startsWith("25")) nc.twentyfive_to_50 = 1;
+  else if (assessments.startsWith("50")) nc.fifty_to_100 = 1;
+  else nc.greater_than_100 = 1;
+
+  async function postCourseData(){
+    const res = await fetch('https://sheet.best/api/sheets/87dbdd2f-c75a-44cd-974b-1d4aef93ddda',{
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nc)
+    });
+    if(res.ok) console.log("Successful!");
+    else{
+      const data = await res.json();
+      console.log(data);
+    }
+  }
+
+  nc.save()
+    .then((nc) => {
+      res.json({ message: "Submitted successfully!" });
+      postCourseData();
+    })
+    .catch((err) => res.status(400).json({ message: "Something went wrong!" }));
 });
 
 module.exports = router;
