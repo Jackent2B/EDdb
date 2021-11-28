@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {useHistory} from 'react-router-dom';
 import {
   Container,
   Button,
@@ -10,15 +11,53 @@ import {
 } from 'reactstrap';
 
 function RecommendForm() {
+  let history = useHistory();
   const [domain, setDomain] = useState('Data Structures and Algorithms');
   const [duration, setDuration] = useState("None");
   const [cost, setCost] = useState("None");
   const [assessments, setAssessments] = useState("None");
 
+  function handleInputs(ipfilter){
+    const arr = ipfilter.split("-");
+    if(arr.length == 1){
+      const strnum = ipfilter.replace( /^\D+/g, '');
+      const num = parseInt(strnum);
+      return (num+1);
+    }
+    const lb = parseInt(arr[0]);
+    const ub = parseInt(arr[1]);
+    return parseInt((lb+ub)/2);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(domain, duration, cost, assessments);
-    //api call, get results here
+    const arg_domain = domain.toLowerCase();
+    const arg_time = handleInputs(duration);
+    const arg_budget = handleInputs(cost);
+    const arg_assignment = handleInputs(assessments);
+    console.log(arg_domain, arg_budget, arg_time, arg_assignment);
+    fetch('http://localhost:3000/course/test/script', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" ,
+                  "Authorization": "Bearer " + localStorage.getItem('jwtToken'),              
+    },
+      body: JSON.stringify({ arg_domain, arg_budget, arg_time, arg_assignment }),
+    }).then((res) => {
+      if(res.ok){
+        res.json().then((result) => {
+          console.log(result)
+          if(result.no_of_recommendations == 0){
+            alert("Sorry! Could not recommend any course! Try with some different constraints!");
+            return;
+          }
+          alert("Course recommended!");
+          history.push("/courses/recommended");
+        });
+        return;
+      }
+      alert("Something went wrong!");
+    })
+
   };
 
   return (

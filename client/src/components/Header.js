@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useHistory} from 'react-router-dom';
 import {
   Container,
   Collapse,
@@ -11,9 +12,16 @@ import {
 } from 'reactstrap';
 
 function Header() {
+  const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  function handleLogout(e){
+    e.preventDefault();
+    localStorage.removeItem("jwtToken");
+    history.push('/home');
+  }
 
   return (
     <Navbar
@@ -41,8 +49,18 @@ function Header() {
               </NavLink>
             </NavItem>
             <NavItem>
+              <NavLink href='/courses/recommended' className='header-navlink'>
+                Recommended Courses
+              </NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href='/signup' className='header-navlink'>
                 Sign up
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={handleLogout} className='header-navlink'>
+                Logout
               </NavLink>
             </NavItem>
           </Nav>

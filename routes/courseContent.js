@@ -1,10 +1,11 @@
-//Code to put data from excel sheet to mongodb automatically
-
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Course = require("../models/course");
+const Recommended = require("../models/recommended");
 const fetch = require("node-fetch");
+const { PythonShell } = require("python-shell");
+const verifyToken = require("../middleware/VerifyToken");
 
 router.get("/add", (req, res, next) => {
   async function getCourseData() {
@@ -95,14 +96,17 @@ router.post("/", (req, res, next) => {
   else if (assessments.startsWith("50")) nc.fifty_to_100 = 1;
   else nc.greater_than_100 = 1;
 
-  async function postCourseData(){
-    const res = await fetch('https://sheet.best/api/sheets/87dbdd2f-c75a-44cd-974b-1d4aef93ddda',{
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(nc)
-    });
-    if(res.ok) console.log("Successful!");
-    else{
+  async function postCourseData() {
+    const res = await fetch(
+      "https://sheet.best/api/sheets/87dbdd2f-c75a-44cd-974b-1d4aef93ddda",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nc),
+      }
+    );
+    if (res.ok) console.log("Successful!");
+    else {
       const data = await res.json();
       console.log(data);
     }
@@ -111,9 +115,49 @@ router.post("/", (req, res, next) => {
   nc.save()
     .then((nc) => {
       res.json({ message: "Submitted successfully!" });
-      postCourseData();
+      // postCourseData();
     })
     .catch((err) => res.status(400).json({ message: "Something went wrong!" }));
+});
+
+router.post("/test/script", verifyToken, (req, res) => {
+  const { arg_domain, arg_budget, arg_time, arg_assignment } = req.body;
+  let options = {
+    mode: "text",
+    args: [arg_domain, arg_budget, arg_time, arg_assignment],
+  };
+  PythonShell.run("recommenderSystem.py", options, function (err, results) {
+    if (err) throw err;
+    console.log("finished");
+    const recs = JSON.parse(results[1]);
+    const nor = results[0];
+    for (const course of recs) {
+      const newrec = new Recommended({
+        userid: req.user._id,
+        name: course.coursename,
+        domain: course.domain,
+        offered_by: course.offeredby,
+        predicted_rating: results[2]
+      });
+      newrec.save();
+    }
+    res.json({
+      no_of_recommendations: nor,
+      recommendations: recs,
+      predicted_rating: results[2],
+    });
+  });
+});
+
+router.get("/recommendations/all", async (req, res) => {
+  const courses = await Recommended.find({});
+  res.json(courses);
+});
+
+router.get("/recommendations/user", verifyToken, async (req, res) => {
+  const { _id } = req.user;
+  const courses = await Recommended.find({ userid: _id });
+  res.json(courses);
 });
 
 module.exports = router;

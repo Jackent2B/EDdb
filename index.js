@@ -8,6 +8,7 @@ const courseRouter = require('./routes/courseContent');
 const { mongoURL } = require('./config/keys');
 const PORT = process.env.PORT || 3000;
 const dotenv = require('dotenv');
+const path = require('path');
 dotenv.config();
 
 var corsOptions = {
