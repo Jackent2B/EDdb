@@ -7,30 +7,51 @@ import {
   Card,
   CardTitle,
   CardText,
+  CardBody,
+  Input
 } from "reactstrap";
 
 function RenderCourse({ course }) {
+
+  const [toggle, setToggle] = useState(false);
+  const [actualRating, setActualRating] = useState(undefined);
+  const [accuracy, setAccuracy] = useState(undefined);
+
+  function handleButton(e){
+    e.preventDefault();
+    if(toggle){
+      setAccuracy(100 - Math.abs(course.predicted_rating - actualRating)*100/course.predicted_rating);
+    }
+    else{
+      setToggle(1);
+    }
+  }
   return (
-    <div style={{ color: "rgb(44, 40, 40)" }}>
-      <Card Body style={{ backgroundColor: "#dbdbdb" }}>
-        <CardText>
+    <Card className="mb-2">
+      <CardBody>
+        <CardTitle className="text-capitalize">
           <h5>Course Name: </h5>
           {course.name}
-        </CardText>
-        <CardText>
+        </CardTitle>
+        <CardText className="text-capitalize">
           <h5>Rating: </h5>
           {course.predicted_rating}
         </CardText>
-        <CardText>
+        <CardText className="text-capitalize">
           <h5>Domain: </h5>
           {course.domain}
         </CardText>
-        <CardText>
+        <CardText className="text-capitalize">
           <h5>Offered By: </h5>
           {course.offered_by}
         </CardText>
-      </Card>
-    </div>
+        {toggle ? 
+          <><Input type="number" step="0.01" value={actualRating} onChange={(e) => setActualRating(e.target.value)} />
+          <CardText>Accuracy: {accuracy}%</CardText></>
+        : null }
+        <Button onClick={handleButton} > Enter actual rating </Button>
+      </CardBody>
+    </Card>
   );
 }
 
@@ -52,12 +73,13 @@ function RecommendedCourses() {
   if (courses.length) {
     return courses.map((course) => {
       return (
-        <div>
+        <Container>
+          <br />
           <RenderCourse course={course} />
-        </div>
+        </Container>
       );
     });
-  } else return <div></div>;
+  } else return <Container> <br /> No courses! </Container>;
 }
 
 export default RecommendedCourses;

@@ -3,6 +3,8 @@ import { Container, Row } from 'reactstrap';
 
 function Footer() {
   return (
+    <>
+    <br /> <br />
     <div className="footer-maindiv">
       <Container>
         <Row className="footer-row">
@@ -13,6 +15,7 @@ function Footer() {
         </Row>
       </Container>
     </div>
+    </>
   );
 }
 

@@ -55,7 +55,7 @@ router.get("/add", (req, res, next) => {
   getCourseData();
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", verifyToken, (req, res, next) => {
   const { domain, course, offeredBy, duration, cost, assessments, rating } =
     req.body;
 
@@ -150,13 +150,13 @@ router.post("/test/script", verifyToken, (req, res) => {
 });
 
 router.get("/recommendations/all", async (req, res) => {
-  const courses = await Recommended.find({});
+  const courses = await Recommended.find({}).sort({createdAt: -1});
   res.json(courses);
 });
 
 router.get("/recommendations/user", verifyToken, async (req, res) => {
   const { _id } = req.user;
-  const courses = await Recommended.find({ userid: _id });
+  const courses = await Recommended.find({ userid: _id }).sort({createdAt: -1});
   res.json(courses);
 });
 
