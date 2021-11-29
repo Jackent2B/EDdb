@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   Button,
@@ -8,48 +8,49 @@ import {
   Label,
   Input,
   FormText,
-} from "reactstrap";
+} from 'reactstrap';
 
 function Signup() {
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    fetch('http://localhost:3000/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then((result) => {
-          console.log(result);
-          history.push("/login");
-        });
-        return;
-      }
-      res.json().then((error) => setError(error));
-    },
-    (error) => setError(error)
+    }).then(
+      (res) => {
+        if (res.ok) {
+          res.json().then((result) => {
+            console.log(result);
+            history.push('/login');
+          });
+          return;
+        }
+        res.json().then((error) => setError(error));
+      },
+      (error) => setError(error)
     );
   };
   return (
-    <Container className="mt-5">
+    <Container className='mt-5'>
       {error ? (
-        <div className="alert alert-warning" role="alert">
-          {" "}
-          {error.message}{" "}
+        <div className='alert alert-warning' role='alert'>
+          {' '}
+          {error.message}{' '}
         </div>
       ) : null}
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label> Name </Label>
           <Input
-            type="text"
+            type='text'
             value={name}
-            placeholder="Username"
+            placeholder='Username'
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -57,9 +58,9 @@ function Signup() {
         <FormGroup>
           <Label> Email </Label>
           <Input
-            type="email"
+            type='email'
             value={email}
-            placeholder="Email"
+            placeholder='Email'
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -67,14 +68,22 @@ function Signup() {
         <FormGroup>
           <Label> Password </Label>
           <Input
-            type="password"
+            type='password'
             value={password}
-            placeholder="Password"
+            placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </FormGroup>
-        <Button type="Submit"> Submit </Button>
+        <Button type='Submit'> Submit </Button>
+        <div>
+          Already a User?
+          <a href='/login'>
+            <i>
+              <b>Login</b>
+            </i>
+          </a>
+        </div>
       </Form>
     </Container>
   );
