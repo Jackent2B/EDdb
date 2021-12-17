@@ -401,7 +401,7 @@ else:
 
 print(len(res))
 print(json.dumps(res))
-print(predicted)
+print(round(predicted,2))
 # print("Can you provide us the rating which you would like to give after pursuing the course")
 # stars = int(input())
 # print("The percentage error in our system is: ")

@@ -20,7 +20,9 @@ function RenderCourse({ course }) {
   function handleButton(e){
     e.preventDefault();
     if(toggle){
-      setAccuracy(100 - Math.abs(course.predicted_rating - actualRating)*100/course.predicted_rating);
+      let x = 100 - Math.abs(course.predicted_rating - actualRating)*100/course.predicted_rating;
+      let y = x.toFixed(2);
+      setAccuracy(y);
     }
     else{
       setToggle(1);
@@ -35,7 +37,7 @@ function RenderCourse({ course }) {
         </CardTitle>
         <CardText className="text-capitalize">
           <h5>Rating: </h5>
-          {course.predicted_rating}
+          {course.predicted_rating.toFixed(2)}
         </CardText>
         <CardText className="text-capitalize">
           <h5>Domain: </h5>
@@ -47,7 +49,10 @@ function RenderCourse({ course }) {
         </CardText>
         {toggle ? 
           <><Input type="number" step="0.01" value={actualRating} onChange={(e) => setActualRating(e.target.value)} />
-          <CardText>Accuracy: {accuracy}%</CardText></>
+          {accuracy ? 
+          <CardText>Accuracy: {accuracy}%</CardText>
+          : null }
+          </>
         : null }
         <Button onClick={handleButton} > Enter actual rating </Button>
       </CardBody>
