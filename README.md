@@ -21,15 +21,15 @@ Following are the Instructions on setting up your project locally:
 
 This is an example of how to list things you need to use the software and how to install them.
 1. npm
-  ```sh
+  ```
   npm install npm@latest -g
   ```
 2.  git config username
-  ```sh
+  ```
   git config --global user.name "username"
   ```
 3.  git config email
-  ```sh
+  ```
   git config --global user.email "user@mail.com"
   ```
 
@@ -37,23 +37,23 @@ This is an example of how to list things you need to use the software and how to
 
 1. Get your Mongodb Atlas credentials [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/lp/try2?utm_source=google&utm_campaign=gs_apac_india_search_core_brand_atlas_desktop&utm_term=mongodbatlas&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=12212624347&adgroup=115749713263&gclid=Cj0KCQiAzfuNBhCGARIsAD1nu-9lU_JU7_daHFi7wtHLEazj8JBYdBEdl2iFcyKHKKUTMnrGqKQ6--EaArPHEALw_wcB)
 2. Clone the repo
-   ```sh
+   ```
    git clone https://github.com/Jackent2B/EDdb.git
    ```
 3. Install NPM packages
-   ```sh
+   ```
    npm install
    ```
 
 4. Create a .env file and enter your credentials in it
-   ```sh
+   ```
    mongoURL='Your URL'
    JWT_TOKEN = 'Your JWT token'
    ```
 5. Create a `dev.js` file inside config folder.
 
 6.  Now create a module.exports object inside `dev.js` file and enter your credentials inside it.
-   ```sh
+   ```
    mongoURL='Your URL'
    JWT_TOKEN = 'Your JWT token'
    ```
@@ -62,13 +62,13 @@ This is an example of how to list things you need to use the software and how to
 Switch to the cloned repository using your terminal
 
 1. Run Node.js server 
-   ```sh
+   ```
    npm start
    ```
 Now, Switch on to the client folder in the second window of terminal,<br/>
 
 2. Run React.js client 
-   ```js
+   ```
    npm start
    ```
    
