@@ -20,15 +20,15 @@ Following are the Instructions on setting up your project locally:
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
+1. npm
   ```sh
   npm install npm@latest -g
   ```
-*  git config username
+2.  git config username
   ```sh
   git config --global user.name "username"
   ```
-*  git config email
+3.  git config email
   ```sh
   git config --global user.email "user@mail.com"
   ```
